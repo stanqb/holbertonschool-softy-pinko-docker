@@ -1,0 +1,27 @@
+services:
+  back-end:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: softy-pinko-back-end:task5
+    # Pas de mappage de port vers l'hôte
+  
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: softy-pinko-front-end:task5
+    # Pas de mappage de port vers l'hôte
+    depends_on:
+      - back-end
+  
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: softy-pinko-proxy:task5
+    ports:
+      - "80:80"  # Expose le port 80 vers l'extérieur
+    depends_on:
+      - front-end
+      - back-end
